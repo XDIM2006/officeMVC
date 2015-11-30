@@ -1,0 +1,9 @@
+﻿@model WebApplication1.Models.ImageModel
+
+<p>
+    @Url.Action("GetPreview", "Home", new { filePath = Model.filePath })
+</p>
+
+<div>
+    <img src=" @Url.Action("GetPreview", "Home", new { filePath = Model.filePath })">
+</div>

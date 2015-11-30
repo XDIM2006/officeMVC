@@ -8,7 +8,7 @@ using System.Net;
 
 namespace WebApplication1.Models
 {
-    public class UrlModel
+    public class old
     {
         [Display(Name = "URL")]
         public string Site { get; set; }
@@ -21,7 +21,7 @@ namespace WebApplication1.Models
         public string Site { get; set; }
         public Guid ID { get; set; }
         public WebClient client { get; set; }
-        public TaskModel(UrlModel model)
+        public TaskModel(old model)
         {
             Site = model.Site;
             ID = model.ID;
@@ -32,7 +32,7 @@ namespace WebApplication1.Models
         private static ConcurrentDictionary<Guid, TaskModel> DownloaderManager 
             = new ConcurrentDictionary<Guid, TaskModel>();
        
-        public static void CreateNew(UrlModel model)
+        public static void CreateNew(old model)
         {
             model.ID = Guid.NewGuid();
             var taskmodel = new TaskModel(model);
@@ -47,7 +47,7 @@ namespace WebApplication1.Models
             return await taskmodel.client.DownloadStringTaskAsync(new Uri(taskmodel.Site));
         } 
 
-        public static UrlModel Cancel(UrlModel model)
+        public static old Cancel(old model)
         {
             TaskModel taskmodel;
             DownloaderManager.TryGetValue(model.ID, out taskmodel);

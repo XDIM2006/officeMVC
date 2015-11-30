@@ -1,25 +1,41 @@
-﻿@model WebApplication1.Models.UrlModel
+﻿@model WebApplication1.Models.ImageModel
 
-@{
-    ViewBag.Title = "Home Page";
-    AjaxOptions ajaxOpts = new AjaxOptions
-    {
-        InsertionMode = InsertionMode.InsertAfter,
-        UpdateTargetId = "list",
-        LoadingElementId = "loading",
-        LoadingElementDuration = 1000,
-    };
-}
+@section scripts{
+<script type="text/javascript">
 
-<div class="jumbotron">
-    <h1>Enter site</h1>
-    @using (Ajax.BeginForm("DownloadSite", "Home", ajaxOpts))
-    {
-       @Html.LabelFor(model => model.Site)
-       @Html.EditorFor(model => model.Site)
-       <input type="submit" value="Save" class="btn btn-default" />
- 
+    $('#submit').on('click', function (e) {
+        e.preventDefault();
+        var files = document.getElementById('uploadFile').files;
+        if (files.length > 0) {
+            if (window.FormData !== undefined) {
+                var data = new FormData();
+                for (var x = 0; x < files.length; x++) {
+                    data.append("file" + x, files[x]);
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Upload", "Home")',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                        $('#list').append(result)
+                    },
+                    error: function (xhr, status, p3) {
+                        alert(xhr.responseText);
+                    }
+                });
+            } else {
+                alert("Браузер не поддерживает загрузку файлов HTML5!");
+            }
+        }
+    });
+</script>
     }
+<div>
+    <input type="file" name="upload" id="uploadFile" /><br />
+    <button id="submit">Загрузить</button>
 </div>
 <div class="row" id="list">
 
