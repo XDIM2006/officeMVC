@@ -1,42 +1,17 @@
-﻿@model WebApplication1.Models.ImageModel
+﻿@model WebApplication1.Models.SettingsModel
 
-@section scripts{
-<script type="text/javascript">
+<input data-bind="value:CountOfElementForThread" /><br />
+<input data-bind="value:CountOfImages" /><br />
 
-    $('#submit').on('click', function (e) {
-        e.preventDefault();
-        var files = document.getElementById('uploadFile').files;
-        if (files.length > 0) {
-            if (window.FormData !== undefined) {
-                var data = new FormData();
-                for (var x = 0; x < files.length; x++) {
-                    data.append("file" + x, files[x]);
-                }
-
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("Upload", "Home")',
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (result) {
-                        $('#list').append(result)
-                    },
-                    error: function (xhr, status, p3) {
-                        alert(xhr.responseText);
-                    }
-                });
-            } else {
-                alert("Браузер не поддерживает загрузку файлов HTML5!");
-            }
-        }
-    });
-</script>
-    }
 <div>
-    <input type="file" name="upload" id="uploadFile" /><br />
-    <button id="submit">Загрузить</button>
+    <input type="file" name="upload" id="uploadFile" multiple/><br />
+    <button data-bind="click:SelectImages" >Загрузить</button>
 </div>
+<ul data-bind="foreach: SelectedImages">
+    <li data-bind="text: name"></li>
+</ul>
+
+
 <div class="row" id="list">
 
 </div>

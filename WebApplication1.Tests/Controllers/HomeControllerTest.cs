@@ -15,10 +15,7 @@ namespace WebApplication1.Tests.Controllers
         [TestMethod]
         public void StartDownload()
         {
-            var c = new old() { Site = @"http://www.yandex.ru" };
-            Downloader.CreateNew(c);
-            var task = Downloader.StartNew(c.ID);
-            Assert.IsTrue(task.Result.Length > 0);
+
         }
 
     }

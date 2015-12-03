@@ -21,22 +21,24 @@ namespace WebApplication1.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Upload(ImageModel model)
+        public ActionResult Upload(SettingsModel model)
         {
+            var result = new List<ImageModel>();
             foreach (string file in Request.Files)
             {
                 var upload = Request.Files[file];
                 if (upload != null)
                 {
+                    var img = new ImageModel();
                     // получаем имя файла
                     string fileName = System.IO.Path.GetFileName(upload.FileName);
                     // сохраняем файл в папку Files в проекте
-                    model.filePath = "~/Images/" + fileName;
-                    upload.SaveAs(Server.MapPath(model.filePath));
-
+                    img.filePath = "~/Images/" + fileName;
+                    upload.SaveAs(Server.MapPath(img.filePath));
+                    result.Add(img);
                 }
             }
-            return PartialView(model);
+            return PartialView(result);
         }
         public HttpResponseMessage GetPreview(string filePath)
         {

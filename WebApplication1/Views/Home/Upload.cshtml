@@ -1,9 +1,12 @@
-﻿@model WebApplication1.Models.ImageModel
+﻿@model IEnumerable<WebApplication1.Models.ImageModel>
 
+
+@foreach (var item in Model)
+{
 <p>
-    @Url.Action("GetPreview", "Home", new { filePath = Model.filePath })
+    @Url.Action("GetPreview", "Home", new { filePath = item.filePath })
 </p>
-
 <div>
-    <img src=" @Url.Action("GetPreview", "Home", new { filePath = Model.filePath })">
+    <img src=" @Url.Action("GetPreview", "Home", new { filePath = item.filePath })">
 </div>
+}

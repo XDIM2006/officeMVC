@@ -9,9 +9,9 @@ namespace WebApplication1
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery.unobtrusive-ajax*",
+                        "~/Scripts/knockout-3.4.0.debug.js",
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/_references.js"));
+                        "~/Scripts/viewmodel.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
