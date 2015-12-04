@@ -1,19 +1,59 @@
 ﻿@model WebApplication1.Models.SettingsModel
 
-<input data-bind="value:CountOfElementForThread" /><br />
-<input data-bind="value:CountOfImages" /><br />
-
-<div>
-    <input type="file" name="upload" id="uploadFile" multiple/><br />
-    <button data-bind="click:SelectImages" >Загрузить</button>
+<div class="row">
+    <div class="col-md-4">
+        <div>
+            CountOfImages:<br />
+            <input data-bind="value:CountOfImages" type="number" /><br />
+        </div>
+    </div>
+    <div class="col-md-6">
+        <ul data-bind="foreach: CustomResizeSettings">
+            <li>
+                Name:
+                <span data-bind="text: Name"></span>
+                Width:
+                <span data-bind="text: Width"></span>
+                Height:
+                <span data-bind="text: Height"></span>
+            </li>
+        </ul>
+        <div>
+            <form data-bind="submit: AddCustomResizeSetting">
+                Name:
+                <input data-bind="value:Name" type="text"/>
+                Width:
+                <input data-bind="value:Width" type="number"/><br/>
+                Height:
+                <input data-bind="value:Height" type="number"/>
+                <button type="submit">Add</button><br />
+            </form>
+        </div>
+    </div>
 </div>
-<ul data-bind="foreach: SelectedImages">
-    <li data-bind="text: name"></li>
-</ul>
-
-
-<div class="row" id="list">
-
+<div class="row">
+    <div class="col-md-6">
+        Необходимо выбрать минимум один файлы:
+        <input title="Необходимо выбрать минимум один файлы" name="model" type="file" accept="image" id="uploadFile" multiple /><br />
+        <button data-bind="click:SelectImages">Загрузить</button>
+        <ul data-bind="foreach: Images">
+            <li data-bind="text: name"></li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <button data-bind="click:SentToServer">Обработать фото</button>
+        <ul data-bind="foreach: ProcessingImages">
+            <li data-bind="text: name"></li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ul data-bind="foreach: ProcessedImages">
+            <li data-bind="text: OriginalFile.fileName"></li>
+            <img data-bind="attr: {'src': PreviewFile.filePath}">
+        </ul>
+    </div>
 </div>
 
 <div id="loading" class="load" style="display: none">

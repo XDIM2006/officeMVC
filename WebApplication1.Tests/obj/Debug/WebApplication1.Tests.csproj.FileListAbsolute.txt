@@ -149,3 +149,7 @@ C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tes
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tests\bin\Debug\System.Web.Routing.dll
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tests\bin\Debug\System.Xml.dll
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tests\bin\Debug\System.Xml.Linq.dll
+C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tests\bin\Debug\MultiThreadResizer.dll
+C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tests\bin\Debug\ImageResizer.dll
+C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tests\bin\Debug\MultiThreadResizer.pdb
+C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tests\bin\Debug\ImageResizer.xml
