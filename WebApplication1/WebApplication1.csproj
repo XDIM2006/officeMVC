@@ -46,7 +46,7 @@
   <ItemGroup>
     <Reference Include="ImageResizer, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ImageResizerInthreads\MultiThreadResizer\bin\Debug\ImageResizer.dll</HintPath>
+      <HintPath>bin\ImageResizer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -57,7 +57,7 @@
     </Reference>
     <Reference Include="MultiThreadResizer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ImageResizerInthreads\MultiThreadResizer\bin\Debug\MultiThreadResizer.dll</HintPath>
+      <HintPath>bin\MultiThreadResizer.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>True</Private>

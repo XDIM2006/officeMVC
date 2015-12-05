@@ -4,23 +4,50 @@
     self.Width = Width;
     self.Height = Height;
 }
+function ImageModel(o) {
+    var self = this;
+    self.filePath = o.filePath;
+    self.fileName = o.fileName;
+    self.StartResize = o.StartTime;
+    self.FinishResize = o.FinishTime;
+}
+function WorkModel(o) {
+    var self = this;
+    self.OriginalFile = new ImageModel(o.OriginalFile);
+    self.PreviewFile = new ImageModel(o.PreviewFile);
+    self.Files = ko.observableArray();
+    for (var i = 0; i < o.Files.length; i++) {
+        self.Files.push(new ImageModel(o.Files[i]));
+    }
+}
+
+function generateUUID() {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+};
 
 var viewModel =
     {
+        uuid : generateUUID(),
         // size of set of images for server processing
         CountOfImages: ko.observable(10),
         //images are chose on client 
         Images: ko.observableArray(),
-        Name : ko.observable('large'),
+        Name : ko.observable('_large'),
         Width : ko.observable(1000),
         Height : ko.observable(1000),
-        CustomResizeSettings: ko.observableArray([new ResizeSettingsClass("_thumb", 20, 20)]),       
+        CustomResizeSettings: ko.observableArray(),       
 
         AddCustomResizeSetting: function () {
             var self = this;
             var ResizeSettingsModel = new ResizeSettingsClass(self.Name(), self.Width(), self.Height());
             $.ajax({
-                url: 'Home/AddSetting',
+                url: 'Home/AddSetting' + '?uuid=' + self.uuid,
                 type: "POST",
                 data: ko.toJSON(ResizeSettingsModel),
                 contentType: 'application/json; charset=utf-8',
@@ -65,22 +92,8 @@ var viewModel =
                 self.ProcessingImages.push(item);
                 formData.append("file" + i, item)
             }
-            self.save = function () {
-                $.ajax("/echo/json/", {
-                    data: {
-                        json: ko.toJSON({
-                            tasks: this.tasks
-                        })
-                    },
-                    type: "POST",
-                    dataType: 'json',
-                    success: function (result) {
-                        alert(ko.toJSON(result))
-                    }
-                });
-            };
             $.ajax({
-                url: 'Home/Upload',
+                url: 'Home/Upload' + '?uuid=' + self.uuid,
                 type: "POST",
                 data: formData,
                 dataType: 'json',
@@ -88,9 +101,10 @@ var viewModel =
                 processData: false,
                 success: function (data) {                
                      if (data.length > 0) {
-                        for (var i = 0; i < data.length; i++) {
-                            self.ProcessingImages.remove(function (item) { return item.name == data[i].OriginalFile.fileName; });
-                            self.ProcessedImages.push(data[i]);
+                         for (var i = 0; i < data.length; i++) {
+                             var model = new WorkModel(data[i]);
+                             self.ProcessingImages.remove(function (item) { return item.name == model.OriginalFile.fileName; });
+                             self.ProcessedImages.push(model);
                         }
                     }
 

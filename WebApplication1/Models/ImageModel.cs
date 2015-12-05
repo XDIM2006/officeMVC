@@ -1,7 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using MultiThreadResizer;
 using System;
 
@@ -23,16 +20,22 @@ namespace WebApplication1.Models
     {
         public string filePath { get; set; }
         public string fileName { get; set; }
+        public string StartTime { get; }
+        public string FinishTime { get; }
+        public ImageModel()
+        {
+
+        }
+        public ImageModel(StatusOfImage status)
+        {
+            StartTime = status.StartTime.ToString("F");
+            FinishTime = status.FinishTime.ToString("F");
+        }
     }
 
     public class CustomResizeSettingsModel
     {
         public static List<CustomResizeSettings> CustomResizeSettings { get; set; }
-    }
-
-    public class MultiThreadResizerClass
-    {
-        public static MultiThreadResizerWorker Worker = new MultiThreadResizerWorker(2,10);
     }
 
     public class ResizeSettingsModel

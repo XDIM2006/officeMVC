@@ -1,5 +1,4 @@
-﻿@model WebApplication1.Models.SettingsModel
-
+﻿
 <div class="row">
     <div class="col-md-4">
         <div>
@@ -31,6 +30,9 @@
         </div>
     </div>
 </div>
+<br />
+<br />
+<br />
 <div class="row">
     <div class="col-md-6">
         Необходимо выбрать минимум один файлы:
@@ -49,10 +51,28 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <ul data-bind="foreach: ProcessedImages">
-            <li data-bind="text: OriginalFile.fileName"></li>
-            <img data-bind="attr: {'src': PreviewFile.filePath}">
-        </ul>
+        <table>
+            <tbody data-bind="foreach: ProcessedImages">
+                <tr>
+                    <td data-bind="with: OriginalFile">
+                        <span data-bind="text: fileName"></span>
+                    </td>
+                    <td data-bind="with: PreviewFile">
+                        <img data-bind="attr: {'src': filePath}" />
+                    </td>
+                    <td data-bind="with: PreviewFile">
+                        <span data-bind="text: StartResize + ' - ' + FinishResize "></span>
+                    </td>
+                    <td>
+                        <ul data-bind="foreach: Files">
+                            <li>
+                                <a target="_blank" data-bind="text: fileName, attr: {'href': filePath}"></a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

@@ -23,6 +23,17 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public async Task<JsonResult> Upload()
         {
+            MultiThreadResizerWorker worker;
+            var uuid = Request["uuid"];
+            if (!string.IsNullOrEmpty(uuid))
+            {
+                worker = workerClass.GetWorker(uuid);
+            }
+            else
+            {
+                throw new Exception("uuid is not passed");
+            }
+
             var result = new List<WorkModel>();
             List<string> ImagesForWorker = new List<string>();
             foreach (string file in Request.Files)
@@ -42,32 +53,37 @@ namespace WebApplication1.Controllers
                 }
                 result.Add(workModel);
             }
-            MultiThreadResizerClass.Worker.AddListOfImages(ImagesForWorker);
+            worker.AddListOfImages(ImagesForWorker);
 
-            await MultiThreadResizerClass.Worker.StartResizingTask(600);
+            await worker.StartResizingTask(600);
 
-            result.ForEach(workermodel => {
-                MultiThreadResizerClass.Worker.ListOfFileAndCustomResizeSettings.Keys
-                .Where(f => f.FileSource == Server.MapPath(workermodel.OriginalFile.filePath)).Select(f=> f.FileName).ToList().ForEach(FileName =>
-                {
-                    if (FileName.Contains("_thumb"))
-                    {
-                        workermodel.PreviewFile = new ImageModel()
-                        {
-                            fileName = FileName,
-                            filePath = Url.Content("~/Images/" + FileName)
-                        };
-                    }
-                    else
-                    {
-                        workermodel.Files.Add(new ImageModel()
-                        {
-                            fileName = FileName,
-                            filePath = Url.Content("~/Images/" + FileName)
-                        });
-                    }
-
-                });
+            result.ForEach(workermodel =>
+            {
+                worker.ListOfFileAndCustomResizeSettings.Keys
+                .Where(f => f.FileSource == Server.MapPath(workermodel.OriginalFile.filePath)).ToList().ForEach(key =>
+                 {
+                     StatusOfImage localStatus;
+                     worker.ListOfFileAndCustomResizeSettings.TryGetValue(key, out localStatus);
+                     
+                     if (key.FileName.Contains(workerClass.PreviewName))
+                     {
+                         workermodel.PreviewFile = new ImageModel(localStatus)
+                         {
+                             fileName = key.FileName,
+                             filePath = Url.Content("~/Images/" + key.FileName),
+                             
+                         };
+                     }
+                     else
+                     {
+                         workermodel.Files.Add(new ImageModel(localStatus)
+                         {
+                             fileName = key.FileName,
+                             filePath = Url.Content("~/Images/" + key.FileName)
+                         });
+                     }
+                     localStatus = null;
+                 });
             });
 
 
@@ -76,13 +92,30 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public JsonResult AddSetting(ResizeSettingsModel model)
         {
-            MultiThreadResizerClass.Worker.ListOfResizeSettings.Add(new CustomResizeSettings(model.Name, model.Width, model.Height));
+            var uuid = Request["uuid"];
+            if (!string.IsNullOrEmpty(uuid))
+            {
+                workerClass.GetWorker(uuid).ListOfResizeSettings.Add(new CustomResizeSettings(model.Name, model.Width, model.Height));
+            }
+            else
+            {
+                throw new Exception("uuid is not passed");
+            }
             return Json(model);
         }
         [HttpPost]
         public JsonResult SetThreadCount(ResizeSettingsModel model)
         {
-            MultiThreadResizerClass.Worker.ListOfResizeSettings.Add(new CustomResizeSettings(model.Name, model.Width, model.Height));
+            var uuid = Request["uuid"];
+            if (!string.IsNullOrEmpty(uuid))
+            {
+                workerClass.GetWorker(uuid).ListOfResizeSettings.Add(
+                    new CustomResizeSettings(model.Name, model.Width, model.Height));
+            }
+            else
+            {
+                throw new Exception("uuid is not passed");
+            }
             return Json(model);
         }
 
@@ -100,7 +133,7 @@ namespace WebApplication1.Controllers
             string mimeType = Path.GetExtension(filePath).Replace(".", "image/");
             resp.Content.Headers.ContentType = new MediaTypeHeaderValue(mimeType);
 
-           return resp;
+            return resp;
         }
 
 

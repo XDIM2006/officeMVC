@@ -153,3 +153,19 @@ C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tes
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tests\bin\Debug\ImageResizer.dll
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tests\bin\Debug\MultiThreadResizer.pdb
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tests\bin\Debug\ImageResizer.xml
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\Microsoft.CSharp.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\System.ComponentModel.DataAnnotations.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\System.Configuration.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\System.Data.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\System.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\System.Net.Http.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\System.Net.Http.WebRequest.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\System.Web.Abstractions.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\System.Web.ApplicationServices.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\System.Web.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\System.Web.Extensions.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\System.Web.Routing.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\System.Xml.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\System.Xml.Linq.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\MultiThreadResizer.dll
+C:\Users\Дмитрий\Documents\Visual Studio 2015\Projects\mvc\WebApplication1.Tests\bin\Debug\ImageResizer.dll
