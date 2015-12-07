@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -9,7 +8,6 @@ using WebApplication1.Models;
 using System.Net.Http;
 using System.IO;
 using System.Net.Http.Headers;
-using System.Net;
 using MultiThreadResizer;
 
 namespace WebApplication1.Controllers
