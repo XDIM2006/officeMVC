@@ -165,7 +165,6 @@ C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1\bin
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1\bin\WebGrease.dll
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1\bin\ImageResizer.xml
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1\bin\MultiThreadResizer.pdb
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1\bin\Newtonsoft.Json.xml
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1\bin\System.Web.Helpers.xml
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1\bin\System.Web.Mvc.xml
