@@ -213,3 +213,6 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+# Include DLLs if they're in the NuGet packages directory
+!/dlls/*.dll
