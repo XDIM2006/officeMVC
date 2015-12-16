@@ -112,3 +112,9 @@ C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tes
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tests\obj\Debug\WebApplication1.Tests.csprojResolveAssemblyReference.cache
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tests\obj\Debug\WebApplication1.Tests.dll
 C:\Users\Dmitriy_Sharnin@epam.com\Documents\GitHub\officeMVC\WebApplication1.Tests\obj\Debug\WebApplication1.Tests.pdb
+C:\Users\Дмитрий\Documents\GitHub\officeMVC\WebApplication1.Tests\obj\Debug\WebApplication1.Tests.csprojResolveAssemblyReference.cache
+C:\Users\Дмитрий\Documents\GitHub\officeMVC\WebApplication1.Tests\bin\Debug\WebApplication1.Tests.dll.config
+C:\Users\Дмитрий\Documents\GitHub\officeMVC\WebApplication1.Tests\bin\Debug\WebApplication1.Tests.dll
+C:\Users\Дмитрий\Documents\GitHub\officeMVC\WebApplication1.Tests\bin\Debug\WebApplication1.Tests.pdb
+C:\Users\Дмитрий\Documents\GitHub\officeMVC\WebApplication1.Tests\obj\Debug\WebApplication1.Tests.dll
+C:\Users\Дмитрий\Documents\GitHub\officeMVC\WebApplication1.Tests\obj\Debug\WebApplication1.Tests.pdb

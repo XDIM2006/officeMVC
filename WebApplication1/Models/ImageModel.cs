@@ -22,6 +22,8 @@ namespace WebApplication1.Models
         public string fileName { get; set; }
         public string StartTime { get; }
         public string FinishTime { get; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         public ImageModel()
         {
 

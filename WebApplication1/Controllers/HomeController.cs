@@ -47,6 +47,11 @@ namespace WebApplication1.Controllers
                     workModel.OriginalFile.filePath = Url.Content("~/Images/" + fileName);
                     workModel.OriginalFile.fileName = fileName;
                     upload.SaveAs(Server.MapPath(workModel.OriginalFile.filePath));
+                    using (var img = System.Drawing.Image.FromFile(Server.MapPath(workModel.OriginalFile.filePath)))
+                    {
+                        workModel.OriginalFile.Height = img.Height;
+                        workModel.OriginalFile.Width = img.Width;
+                    }
                     ImagesForWorker.Add(Server.MapPath(workModel.OriginalFile.filePath));
                 }
                 result.Add(workModel);
