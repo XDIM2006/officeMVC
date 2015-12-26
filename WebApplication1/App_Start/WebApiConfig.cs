@@ -1,7 +1,9 @@
-﻿using System.Web.Http;
-using System.Web.Http.OData.Builder;
-using System.Web.Http.OData.Extensions;
-using WebApplication1.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Web.Http;
+using Newtonsoft.Json.Serialization;
 
 namespace WebApplication1
 {
@@ -9,9 +11,16 @@ namespace WebApplication1
     {
         public static void Register(HttpConfiguration config)
         {
-            ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-            builder.EntitySet<Image>("Images");
-            config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
+            // Конфигурация и службы Web API
+            
+            // Маршруты Web API
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
         }
     }
 }

@@ -32,65 +32,99 @@ namespace WebApplication1.Controllers
                 throw new Exception("uuid is not passed");
             }
 
-            var result = new List<WorkModel>();
+            var userImages = new List<Image>();
             List<string> ImagesForWorker = new List<string>();
             foreach (string file in Request.Files)
             {
                 var upload = Request.Files[file];
-                var workModel = new WorkModel();
+                var userImage = new Image();
                 if (upload != null)
                 {
-                    workModel.OriginalFile = new ImageModel();
                     // получаем имя файла
                     string fileName = Path.GetFileName(upload.FileName);
                     // сохраняем файл в папку Files в проекте
-                    workModel.OriginalFile.filePath = Url.Content("~/Images/" + fileName);
-                    workModel.OriginalFile.fileName = fileName;
-                    upload.SaveAs(Server.MapPath(workModel.OriginalFile.filePath));
-                    using (var img = System.Drawing.Image.FromFile(Server.MapPath(workModel.OriginalFile.filePath)))
+                    userImage.FilePath = Url.Content("~/Images/" + fileName);
+                    userImage.FileName = fileName;
+                    upload.SaveAs(Server.MapPath(userImage.FilePath));
+                    using (var img = System.Drawing.Image.FromFile(Server.MapPath(userImage.FilePath)))
                     {
-                        workModel.OriginalFile.Height = img.Height;
-                        workModel.OriginalFile.Width = img.Width;
+                        userImage.Height = img.Height;
+                        userImage.Width = img.Width;
                     }
-                    ImagesForWorker.Add(Server.MapPath(workModel.OriginalFile.filePath));
+                    ImagesForWorker.Add(Server.MapPath(userImage.FilePath));
                 }
-                result.Add(workModel);
+                userImages.Add(userImage);
             }
             worker.AddListOfImages(ImagesForWorker);
 
-            await worker.StartResizingTask(600);
+            var ResizingTask = worker.StartResizingTask(600);
 
-            result.ForEach(workermodel =>
+            using (var db = new ImageContext())
             {
-                worker.ListOfFileAndCustomResizeSettings.Keys
-                .Where(f => f.FileSource == Server.MapPath(workermodel.OriginalFile.filePath)).ToList().ForEach(key =>
+                for (int i = 0; i < userImages.Count; i++)
+                {
+                    Image img = userImages[i];
+                    try
+                    {
+                        db.Images.Add(img);
+                        db.SaveChanges();
+                    }
+                    catch (Exception exe)
+                    {
+                        userImages.Remove(img);
+                    }
+                }                
+            }
+
+            await ResizingTask;
+
+            var keys = worker.ListOfFileAndCustomResizeSettings.Keys.ToList();
+
+            userImages.ForEach(userImage =>
+            {
+                userImage.PreviewPath = Url.Content("~/Images/" + keys.FirstOrDefault(f => 
+                    f.FileSource == Server.MapPath(userImage.FilePath) 
+                    && f.FileName.Contains(workerClass.PreviewName)
+                )?.FileName??"");
+
+                keys.Where(f => 
+                f.FileSource == Server.MapPath(userImage.FilePath)
+                && !f.FileName.Contains(workerClass.PreviewName)).ToList().ForEach(key =>
                  {
-                     StatusOfImage localStatus;
-                     worker.ListOfFileAndCustomResizeSettings.TryGetValue(key, out localStatus);
-                     
-                     if (key.FileName.Contains(workerClass.PreviewName))
+                     using (var db = new ImageContext())
                      {
-                         workermodel.PreviewFile = new ImageModel(localStatus)
+                         StatusOfImage localStatus;
+
+                         worker.ListOfFileAndCustomResizeSettings.TryGetValue(key, out localStatus);
+
+                         var ResizedImage = new ResizedImage()
                          {
-                             fileName = key.FileName,
-                             filePath = Url.Content("~/Images/" + key.FileName),
-                             
+                             ParentId = userImage.Id,
+                             FileName = key.FileName,
+                             FilePath = Url.Content("~/Images/" + key.FileName),
+                             PreviewPath = userImage.PreviewPath,
+                             Height = key.CustomResizeSetting.Height.GetValueOrDefault(),
+                             Width = key.CustomResizeSetting.Width.GetValueOrDefault(),
+                             StartTime = localStatus.StartTime,
+                             FinishTime = localStatus.FinishTime
                          };
+
+                        try
+                        {
+                            db.ResizedImages.Add(ResizedImage);
+                            db.SaveChanges();
+                        }
+                        catch (Exception exe)
+                        {
+
+                        }
+
+                        localStatus = null;
                      }
-                     else
-                     {
-                         workermodel.Files.Add(new ImageModel(localStatus)
-                         {
-                             fileName = key.FileName,
-                             filePath = Url.Content("~/Images/" + key.FileName)
-                         });
-                     }
-                     localStatus = null;
                  });
             });
 
-
-            return Json(result);
+            return Json(userImages);
         }
         [HttpPost]
         public JsonResult AddSetting(ResizeSettingsModel model)

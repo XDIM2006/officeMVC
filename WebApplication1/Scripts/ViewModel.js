@@ -6,18 +6,28 @@
 }
 function ImageModel(o) {
     var self = this;
-    self.filePath = o.filePath;
-    self.fileName = o.fileName;
+    self.FilePath = o.FilePath;
+    self.FileName = o.FileName;
+    self.PreviewPath = o.PreviewPath;
+    self.Width = o.Width;
+    self.Height = o.Height;
+}
+function ResizedImageModel(o) {
+    var self = this;
+    self.FilePath = o.FilePath;
+    self.FileName = o.FileName;
+    self.PreviewPath = o.PreviewPath;
+    self.Width = o.Width;
+    self.Height = o.Height;
     self.StartResize = o.StartTime;
     self.FinishResize = o.FinishTime;
 }
 function WorkModel(o) {
     var self = this;
     self.OriginalFile = new ImageModel(o.OriginalFile);
-    self.PreviewFile = new ImageModel(o.PreviewFile);
     self.Files = ko.observableArray();
     for (var i = 0; i < o.Files.length; i++) {
-        self.Files.push(new ImageModel(o.Files[i]));
+        self.Files.push(new ResizedImageModel(o.Files[i]));
     }
 }
 
@@ -117,6 +127,31 @@ var viewModel =
                     }
                 }
             });
+        },
+
+        GetImagesFromServer: function () {
+
+            var self = this;
+
+            $.ajax({
+                url: 'api/ResizedImages',
+                type: "POST",
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {                
+                    if (data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var model = new WorkModel(data[i]);
+                            self.ProcessedImages.remove(function (item) { return item.name == model.OriginalFile.fileName; });
+                            self.ProcessedImages.push(model);
+                        }
+                    }
+
+                },
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);                    
+                }
+            });    
         }
     }
 
